@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SIRE version="1.0">
+  <mcmc nsample="5000" burnin="500"/>
+  <model type="SIR" residual="on" groupeff="on"/>
+  <data N="15"/>
+  <data Z="2"/>
+  <inference tmin="0" tmax="10"/>
+  <observation tmin="0" tmax="10"/>
+  <prior parameter="β" type="Flat" val1="0" val2="1"/>
+  <prior parameter="γ" type="Flat" val1="0" val2="1"/>
+  <prior parameter="k" type="Flat" val1="1" val2="5"/>
+  <prior parameter="G" type="Flat" val1="-2.3" val2="2.3"/>
+  <prior parameter="σ_G" type="Flat" val1="0" val2="0.5"/>
+  <prior parameter="q_g" type="Flat" val1="-5" val2="5"/>
+  <prior parameter="q_f" type="Flat" val1="-5" val2="5"/>
+  <prior parameter="q_r" type="Flat" val1="-5" val2="5"/>
+  <prior parameter="Ω_gg" type="Flat" val1="0.01" val2="3"/>
+  <prior parameter="Ω_ff" type="Flat" val1="0.01" val2="3"/>
+  <prior parameter="Ω_gf" type="Flat" val1="-3" val2="3"/>
+  <prior parameter="Ω_rr" type="Flat" val1="0.01" val2="3"/>
+  <prior parameter="Ω_gr" type="Flat" val1="-3" val2="3"/>
+  <prior parameter="Ω_fr" type="Flat" val1="-3" val2="3"/>
+  <prior parameter="ε_g" type="Flat" val1="-5" val2="5"/>
+  <prior parameter="ε_f" type="Flat" val1="-5" val2="5"/>
+  <prior parameter="ε_r" type="Flat" val1="-5" val2="5"/>
+  <prior parameter="Ψ_gg" type="Flat" val1="0.01" val2="3"/>
+  <prior parameter="Ψ_ff" type="Flat" val1="0.01" val2="3"/>
+  <prior parameter="Ψ_gf" type="Flat" val1="-3" val2="3"/>
+  <prior parameter="Ψ_rr" type="Flat" val1="0.01" val2="3"/>
+  <prior parameter="Ψ_gr" type="Flat" val1="-3" val2="3"/>
+  <prior parameter="Ψ_fr" type="Flat" val1="-3" val2="3"/>
+  <datatable id="1" group="2" It="3" Rt="4" qg="5" qf="6" qr="7">Ind0	.	.	.	0.0734653046960623	0.2982195547005	0.346849291493372
+Ind1	.	.	.	0.336865767540775	-0.235269220467	0.0156730320778284
+Ind2	.	.	.	1.14283247848019	-0.189720019392363	-0.598714534920513
+Ind3	1	0	3.61450233188609	0.598192081968345	0.333115586046611	0.636219577230286
+Ind4	1	0.323808183709733	4.48518182481995	1.51431454074527	0.738712194099013	0.342497232104446
+Ind5	1	0.38260513281842	0.628101150446235	-0.361483376315329	-0.165687573508365	-0.109441676187544
+Ind6	1	0.421233762079131	0.715418235349041	-0.0650959530774241	-0.280864847180307	0.83701014035489
+Ind7	1	0.442877206473237	9.01992533612301	0.187494770194237	0.18523466702095	-0.00873015276219167
+Ind8	1	1.40652681857782	2.10139354117853	-0.374769410074168	-0.237069929381396	-0.234058532206122
+Ind9	2	0	3.61748372976415	-1.14983464651793	0.349125915116856	-0.260439529690333
+Ind10	2	0.407080249568633	3.24316578635481	0.42408360448696	0.0329777259678586	0.252242242997068
+Ind11	2	0.685646127536932	0.956787644742091	0.0962054318671824	-0.3981245018552	0.1401684516871
+Ind12	2	0.802853385459422	4.50056757794151	-0.165122859242257	-0.571679035021454	-0.054733627089614
+Ind13	2	0.88562577115101	7.2732703247007	0.893134678876094	0.317874805777872	-0.0159999997893708
+Ind14	2	1.98389041472898	9.01466452866091	-0.229889234025373	0.514716391441766	-0.661753564390238
+</datatable>
+  <A_nonzero>0	0	1
+1	1	1
+2	2	1
+0	3	0.5
+3	3	1
+0	4	0.5
+3	4	0.5
+4	4	1
+0	5	0.5
+3	5	0.25
+4	5	0.25
+5	5	1
+0	6	0.5
+3	6	0.25
+4	6	0.25
+5	6	0.5
+6	6	1
+1	7	0.5
+7	7	1
+1	8	0.5
+7	8	0.5
+8	8	1
+1	9	0.5
+7	9	0.25
+8	9	0.25
+9	9	1
+1	10	0.5
+7	10	0.25
+8	10	0.25
+9	10	0.5
+10	10	1
+2	11	0.5
+11	11	1
+2	12	0.5
+11	12	0.5
+12	12	1
+2	13	0.5
+11	13	0.25
+12	13	0.25
+13	13	1
+2	14	0.5
+11	14	0.25
+12	14	0.25
+13	14	0.5
+14	14	1
+</A_nonzero>
+  <prediction_accuracy name="sire" ind="Ind0,Ind1,Ind2"/>
+  <prediction_accuracy name="progeny" ind="Ind3,Ind4,Ind5,Ind6,Ind7,Ind8,Ind9,Ind10,Ind11,Ind12,Ind13,Ind14"/>
+</SIRE>

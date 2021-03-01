@@ -1,0 +1,123 @@
+---
+title: "Full Pipeline"
+output: pdf_document
+author: "Jamie Prentice"
+date: "2021-01-26"
+---
+
+## Overview
+
+Create simulated epidemic data and send to SIRE 2.0. Eventually intend to
+replace simulated data with Turbot data.
+
+R functions based on Richard Bailey's originals. [SIRE
+2.0](https://github.com/theITEAM/SIRE2.0/) modified from Chris Pooley's
+original.
+
+
+```{r include = FALSE}
+# Load libraries and source files
+library(data.table) # used for all data table manipulations
+library(xml2)       # used to generate XML file
+library(corpcor)    # efficient estimation of Cov and (partial) Corr
+library(MASS)
+library(MCMCglmm)
+```
+
+## Load source files
+
+```{r}
+setwd("~/Dropbox/Roslin/pipeline")
+
+# source("parameters.R")
+source("pedigree_grm-old.R")
+source("pedigree_grm.R")
+source("make_traits.R")
+source("episim3.R")
+source("episim3-new.R")
+source("group_assignment.R")
+source("discrete_time.R")
+source("data_table_to_tsv_string.R")
+```
+
+## Parameters
+
+Population numbers
+```{r}
+# No. of sires, dams per sire, and offspring per pair, and groups
+nsire <- 10
+dpsire <- 5
+oppair <- 2
+ngroups <- 2
+
+# Derived population numbers
+ndam = nsire * dpsire
+nparent = nsire + nsire * dpsire
+nprogeny = nsire * dpsire * oppair
+nind = nprogeny
+
+# TODO: I think it should be this, but we'll keep it as is for the moment
+nind = nparent + nprogeny
+
+# TODO: what if this isn't an integer?
+group_size = nprogeny / ngroups
+```
+
+Traits
+```{r}
+# Names
+traitnames <- c("susceptibility", "infectivity", "recoverability")
+# No. of traits to simulate.
+ntraits <- length(traitnames)
+# Trait means
+tmeans <- rep(0, ntraits)
+# Trait additive genetic variance
+tVA <- c(0.5, 0.1, 0.1)
+# Trait non-additive (environmental) variance
+# with no association to the pedigree
+tVE <- c(0.3, 0.3, 0.3)
+# Trait non-additive correlation matrix
+trhoE <- diag(ntraits)
+# Trait additive genetic correlation matrix.
+# In this case correlations are zero.
+trhoG <- diag(ntraits)
+```
+
+Infection and recoverability, targeting `R0 = 2.5`?
+```{r}
+PairwiseBeta <- 0.1
+RRgamma <- 0.2
+```
+
+MCMC settings
+```{r}
+nsample <- 5000
+burnin <- 500
+```
+
+Additional options
+```{r}
+trim_parents <- FALSE
+DEBUG <- FALSE
+```
+
+This will be a list for passing to functions
+```{r}
+pars <- list(nsire = nsire, ndam = ndam, nprogeny = nprogeny, nind = nind, ngroups = ngroups,
+             traitnames = traitnames, ntraits = ntraits, tmeans = tmeans,
+             tVA = tVA, tVE = tVE, trhoE = trhoE, trhoG = trhoG,
+             PairwiseBeta = PairwiseBeta, RRgamma = RRgamma,
+             nsample = nsample, burnin = burnin,
+             trim_parents = trim_parents, DEBUG = DEBUG)
+
+# Quickly summarise what we've got
+cat(with(pars, paste0(
+    "Generating data with:\n",
+    nsire, " sires, ",
+    ndam, " dams, ",
+    nprogeny, " progeny, (",
+    nind, " individuals), ",
+    ngroups, " groups\n",
+    "R0 = ", PairwiseBeta / RRgamma, "?\n"
+)))
+```
